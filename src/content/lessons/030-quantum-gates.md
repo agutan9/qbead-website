@@ -12,6 +12,7 @@ objectives:
   - Recognize the real-world limitations of physical quantum gates
 headerImage: /lessons/QuantumGatesThumbnail.png
 description: Learn what a quantum gate is, why every gate must be unitary and reversible, and explore the X, Y, Z, S, T, and Hadamard gates as matrices and as rotations on the Bloch sphere.
+nextLesson: lessons/040-chsh-game
 ---
 
 <script>
