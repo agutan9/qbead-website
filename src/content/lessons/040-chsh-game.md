@@ -20,6 +20,7 @@ description: Learn how quantum entanglement works and its advantages by playing 
   import BeadExercise from '$lib/components/Bead/BeadExercise.svelte'
   import GateGolf from '$lib/components/Bead/GateGolf.svelte'
   import BeadOnly from '$lib/components/Bead/BeadOnly.svelte'
+  import Picker from '$lib/components/Bead/Picker.svelte'
   import { gatesXY, gatesZS, gatesH, gatesCombining } from '$lib/bead/exercises'
   import { QubitDisplay, BlochVector, OperatorDisplay, gates, animate } from '@qbead/bloch-sphere'
 
@@ -217,15 +218,12 @@ A simple approach for Alice and Bob is to always output the same bit they receiv
 
 As we can see from the table, this strategy only wins in one out of four cases. This means that the probability of winning is 25%. This is not a very good strategy, but it is a starting point. Can you come up with a better classical strategy that increases the probability of winning?
 
-<Callout type="question" title="Find a better classical strategy">
+<Picker title="Find a better classical strategy" options={["0%", "25%", "50%", "75%", "100%"]} correctAnswer=3>
 
 What happens if the strategy is changed so that Alice always outputs 0 and Bob always outputs 0? What is the probability of winning in this case?
 
-[OPTIONS] <!--TODO-->
+</Picker>
 
-0%, 25%, 50%, 75%, 100%
-
-</Callout>
 
 ### Optimal classical strategy
 
