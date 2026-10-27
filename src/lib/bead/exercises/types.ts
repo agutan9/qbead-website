@@ -51,3 +51,13 @@ export type Exercise = {
 export function ran(runs: Run[], ...gates: GateName[]): boolean {
   return runs.some((r) => r.start === '0' && gates.every((g, i) => r.gates[i] === g))
 }
+
+
+export type ExercisePicker = {
+  id: string
+  title: string
+  question: string
+  options: string[]
+  correctAnswer: number
+  justification: string
+}

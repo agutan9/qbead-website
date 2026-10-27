@@ -22,73 +22,43 @@ Props:
 <script lang="ts">
   import type { Snippet } from 'svelte'
   import Callout from '$lib/components/Callout/Callout.svelte'
+  import type { ExercisePicker, Exercise } from '$lib/bead/exercises/types'
 
   let pressedOption = $state<string | null>(null)
-  let {
-    title,
-    options,
-    correctAnswer,
-    children,
-  }: { title: string; options: string[]; correctAnswer: number; children?: Snippet } = $props()
+  let { exercise, children }: { exercise: ExercisePicker; children?: Snippet } = $props()
+  let randAnswer = $state(Math.floor(Math.random() * 2))
 </script>
 
-<Callout type="question" {title}>
+<Callout type="question" title={exercise.title}>
   <div class="grid grid-cols-1 items-start gap-4 md:grid-cols-1">
-    {@render children?.()}
+    <p>{exercise.question}</p>
     <div class="flex flex-col gap-4">
       <div class="flex flex-wrap gap-4">
-        {#each options as op (op)}
+        {#each exercise.options as op (op)}
           <button
             class="btn {pressedOption === op
-              ? op === options[correctAnswer]
+              ? op === exercise.options[exercise.correctAnswer]
                 ? 'preset-tonal-primary'
                 : 'preset-filled-warning-500'
               : 'preset-filled-primary-500'}"
-            onclick={() => (pressedOption = op)}
+            onclick={() => {
+              pressedOption = op
+              randAnswer = Math.floor(Math.random() * 2)
+            }}
           >
             {op}
           </button>
         {/each}
       </div>
-      {#if pressedOption}
+      {#if pressedOption === exercise.options[exercise.correctAnswer]}
         <p>
-          {pressedOption === options[correctAnswer]
-            ? 'Correct! Well done.'
-            : `Incorrect. Try again!`}
+          {'Correct! Well done.\n' + exercise.justification}
+        </p>
+      {:else if pressedOption !== null}
+        <p>
+          {randAnswer === 0 ? 'Incorrect. Try again!' : 'Incorrect. Keep trying!'}
         </p>
       {/if}
     </div>
   </div>
 </Callout>
-
-<!--
-{#if bead.status === 'live'}
-  <Callout type="question" title={exercise.title}>
-    <div class="grid grid-cols-1 items-start gap-6 md:grid-cols-2">
-      <BeadSphere />
-      <div class="flex flex-col gap-4">
-        {#each exercise.widgets as widget, i (i)}
-          {#if typeof widget !== 'string'}
-            {@const W = widget}
-            <W />
-          {:else if widget === 'picker'}
-            <GatePicker />
-          {:else if widget === 'history'}
-            <GateHistory />
-          {:else if widget === 'readout'}
-            <KetReadout />
-          {:else if widget === 'measure'}
-            <MeasureCounter />
-          {:else if widget === 'tasks' && exercise.tasks}
-            <TaskList tasks={exercise.tasks} />
-          {:else if widget === 'challenges' && exercise.challenges}
-            <ChallengeRunner challenges={exercise.challenges} />
-          {/if}
-        {/each}
-      </div>
-    </div>
-  </Callout>
-{:else}
-  {@render children?.()}
-{/if}
--->
