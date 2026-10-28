@@ -15,6 +15,7 @@ description: Learn how quantum entanglement works and its advantages by playing 
 <script>
   import * as THREE from 'three'
   import Callout from '$lib/components/Callout/Callout.svelte'
+  import ExtendableCallout from '$lib/components/Callout/ExtendableCallout.svelte'
   import BlochSphereElement from '$lib/components/BlochSphereElement/BlochSphereElement.svelte'
   import BeadPairing from '$lib/components/Bead/BeadPairing.svelte'
   import Picker from '$lib/components/Bead/Picker.svelte'
@@ -220,13 +221,33 @@ As we can see from the table, this strategy only wins in one out of four cases. 
 
 ### Optimal classical strategy
 
-<Callout type="question" title="What is the best classical strategy?">
+<ExtendableCallout type="question" title="What is the best classical strategy?" shortExplanation="Can you find the best classical strategy that maximizes the probability of winning? What is the maximum probability of winning that can be achieved with a classical strategy?">
 
-Can you find the best classical strategy that maximizes the probability of winning? What is the maximum probability of winning that can be achieved with a classical strategy?
+It turns out that the maximum probability of winning the CHSH Game with any classical strategy is 75%!
 
-[PROOF] <!--TODO-->
+Let us prove that there are no other classical strategies that make the probability higher. Take any deterministic strategy. That is, Alice’s output depends only on her input and Bob’s only on his, 
+$$
+\begin{align}
+a = f(x)\\
+b = g(y)
+\end{align}
+$$
 
-</Callout>
+Then, winning more than 75% would mean that they win all of the time: 100%. That means winning for every combination of inputs. Winning all four combinations would require:
+$$
+\begin{align}
+f(0) \oplus g(0) = 0\\
+f(0) \oplus g(1) = 0\\
+f(1) \oplus g(0) = 0\\
+f(1) \oplus g(1) = 1
+\end{align}
+$$
+
+Add all four equations mod 2. On the left, each of f(0), f(1), g(0) and g(1) appears exactly twice, and anything XORed with itself is 0, so the left side sums to 0. On the right, 0 + 0 + 0 + 1 = 1. That gives 0 = 1, a contradiction. So at least one row must fail for every deterministic strategy, meaning it wins at most 3 of 4 rows, at most 75%. Always-0 shows 3 of 4 is achievable, so 75% is the maximum.
+
+Alice and Bob may use shared randomness (agreeing on a random strategy beforehand) or private randomness (flipping coins). Either way, a randomized strategy is just a probabilistic mixture of deterministic strategies: first a random choice of f and g is made, then they play it. The overall win probability is the average of the win probabilities of the deterministic strategies in the mixture. An average of numbers that are each at most 3/4 can’t exceed 3/4.
+
+</ExtendableCallout>
 
 
 ## Quantum CHSH Game
@@ -340,14 +361,12 @@ As you can see, the classical strategy is deterministic, while the quantum strat
 
 ### Optimal quantum strategy
 
-<Callout type="question" title="What is the best quantum strategy?">
+<ExtendableCallout type="question" title="What is the best quantum strategy?" shortExplanation="Can you find the best quantum strategy that maximizes the probability of winning? What is the maximum probability of winning that can be achieved with a quantum strategy?">
 
-Can you find the best quantum strategy that maximizes the probability of winning? What is the maximum probability of winning that can be achieved with a quantum strategy?
+PROOF
 
-85%
-[PROOF] <!--TODO-->
+</ExtendableCallout>
 
-</Callout>
 
 ## Simulation to visualize the quantum advantage
 
