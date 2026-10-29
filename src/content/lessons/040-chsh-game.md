@@ -169,17 +169,19 @@ This is where we see **quantum correlation** in action. The measurement of one q
 
 ### Bell's Theorem and the CHSH Game
 
-When quantum mechanics, and specifically entanglement, was first described, it was met with skepticism. In particular, in the 1960s, John Stewart Bell introduced a result commonly known as **Bell's theorem**. This result stated some incompatibilities between quantum mechanics and classical physics. Under his assumption, the correlations between the outcomes of an entangled pair of qubits had to obey a specific mathematical constraint, which would later be named a **Bell Inequality**. He then showed that quantum mechanics predicts correlations that violate this inequality, and thus cannot be explained by classical physics. Since then, many experiments have been performed to test this result, and to violate the Bell Inequalities, and they have all confirmed the predictions of quantum mechanics.
+When quantum mechanics, and specifically entanglement, was first described, it was met with skepticism. In particular, in the 1960s, John Stewart Bell introduced a result commonly known as **Bell's theorem**. This result stated some incompatibilities between quantum mechanics and classical physics. Under his assumption, the correlations between the outcomes of an entangled pair of qubits had to obey a specific mathematical constraint, which would later be named a **Bell inequality**. He then showed that quantum mechanics predicts correlations that violate this inequality, and thus cannot be explained by classical physics. Since then, many experiments have been performed to test this result, and to violate the Bell Inequalities, and they have all confirmed the predictions of quantum mechanics.
 
-<Callout type="book" title="More information about Bell's theorem">
+<ExtendableCallout type="book" title="More information about Bell's theorem" shortExplanation="To properly understand Bell's theorem, we need to go into the details of the assumptions that lead to the Bell Inequalities, diving into locality and hidden variables. This is a very interesting topic, but it is beyond the scope of this lesson. More information on this can be found by exploring these sources:">
 
-To properly understand Bell's theorem, we need to go into the details of the assumptions that lead to the Bell Inequalities, diving into locality and hidden variables. This is a very interesting topic, but it is beyond the scope of this lesson.
+- Clauser, J. F.; Horne, M. A.; Shimony, A.; Holt, R. A. (1969). Proposed experiment to test local hidden-variable theories. Physical Review Letters, 23(15), 880–884. (https://doi.org/10.1103/PhysRevLett.23.880)
+- Aspect, A.; Dalibard, J.; Roger, G. (1982). Experimental test of Bell's inequalities using time-varying analyzers. Physical Review Letters, 49(25), 1804–1807. (https://doi.org/10.1103/PhysRevLett.49.1804)
+- Hensen, B. et al. (2015). Loophole-free Bell inequality violation using electron spins separated by 1.3 kilometres. Nature, 526, 682–686. (https://doi.org/10.1038/nature15759)
+- Nielsen, Michael A.; Chuang, Isaac L. (2010). Quantum Computation and Quantum Information (2nd ed.). Cambridge: Cambridge University Press. ISBN 978-1-107-00217-3. OCLC 844974180
+- Wikipedia contributors. Bell's theorem. Wikipedia, The Free Encyclopedia. (https://en.wikipedia.org/wiki/Bell's_theorem)
 
-[REFERENCE] <!--TODO-->
+</ExtendableCallout>
 
-</Callout>
-
-We are going to explore a specific version of the Bell Inequality, known as the **CHSH Game**. This game is a simple way to demonstrate the power of entanglement and how it can lead to correlations that cannot be explained classically.
+We are going to explore a specific version of the Bell inequality, known as the **CHSH Game**. This game is a simple way to demonstrate the power of entanglement and how it can lead to correlations that cannot be explained classically.
 
 
 ## Classical CHSH Game
@@ -223,7 +225,7 @@ As we can see from the table, this strategy only wins in one out of four cases. 
 
 <ExtendableCallout type="question" title="What is the best classical strategy?" shortExplanation="Can you find the best classical strategy that maximizes the probability of winning? What is the maximum probability of winning that can be achieved with a classical strategy?">
 
-It turns out that the maximum probability of winning the CHSH Game with any classical strategy is 75%!
+It turns out that the maximum probability of winning the CHSH Game with any classical strategy is **75%**!
 
 Let us prove that there are no other classical strategies that make the probability higher. Take any deterministic strategy. That is, Alice’s output depends only on her input and Bob’s only on his, 
 $$
@@ -363,7 +365,43 @@ As you can see, the classical strategy is deterministic, while the quantum strat
 
 <ExtendableCallout type="question" title="What is the best quantum strategy?" shortExplanation="Can you find the best quantum strategy that maximizes the probability of winning? What is the maximum probability of winning that can be achieved with a quantum strategy?">
 
-PROOF
+
+As it turns out, the maximum probability of winning with a quantum strategy is around **85%**!
+
+Indeed, let us consider the following strategy: Alice measures her qubit in the **Z basis** when receiving 0 as an input and in the **X basis** when receiving 1. Bob, on the other hand, chooses the **$\frac{Z+X}{\sqrt{2}}$ basis** when the input is 0 and the **$\frac{Z-X}{\sqrt{2}}$ basis** when the input is 1. This strategy is the optimal winning strategy!
+
+Let us prove this result.
+
+We know that Alice and Bob share the entangled pair $|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}}$. Now, suppose Alice measures along angle $\alpha$ and Bob along angle $\beta$. Define the correlation $E(\alpha,\beta) = P(\text{same result}) - P(\text{different result})$.
+
+For $|\Phi^+\rangle$, when Alice gets a result along her axis, Bob’s qubit collapses to the state pointing in the same (or exactly opposite) direction on the Bloch sphere, matching her result. So if the angle between their axes is $\theta = \alpha - \beta$, Bob’s chance of agreeing with Alice is $\cos^2(\theta/2)$, and of disagreeing is $\sin^2(\theta/2)$. Therefore
+
+$$E(\alpha,\beta) = \cos^2\tfrac{\theta}{2} - \sin^2\tfrac{\theta}{2} = \cos\theta = \cos(\alpha-\beta).$$
+
+Let us take a look at the correlation for each input pair:
+
+|x	|y|	Angle difference	|$E = \cos\theta$|
+|--|--|-------------------|----------------|
+|0|	0|	$0^\circ - 45^\circ = -45^\circ$|	$+\frac{1}{\sqrt2}$
+|0|	1|	$0^\circ + 45^\circ = 45^\circ$|	$+\frac{1}{\sqrt2}$
+|1|	0|	$90^\circ - 45^\circ = 45^\circ$|	$+\frac{1}{\sqrt2}$
+|1|	1|	$90^\circ + 45^\circ = 135^\circ$|	$-\frac{1}{\sqrt2}$
+
+The pattern is what we want: the first three rows are positively correlated and the last is anticorrelated, which is exactly the structure of the game.
+
+The output bits are the same ($a \oplus b = 0$) with probability $\frac{1+E}{2}$, and different ($a \oplus b = 1$) with probability $\frac{1-E}{2}$.
+
+Rows (0,0), (0,1), (1,0): they win when $a \oplus b = 0$, so
+
+$$P(\text{win}) = \frac{1 + 1/\sqrt2}{2}$$
+Row (1,1): they win when $a \oplus b = 1$, so
+
+$$P(\text{win}) = \frac{1 - (-1/\sqrt2)}{2} = \frac{1 + 1/\sqrt2}{2}$$
+
+All four rows give the same probability. Since x and y are uniformly random, the overall winning probability is
+
+$$P(\text{win}) = \frac{1}{2} + \frac{1}{2\sqrt2} = \frac{2+\sqrt2}{4} = \cos^2\!\left(\frac{\pi}{8}\right) \approx 0.854.$$
+
 
 </ExtendableCallout>
 

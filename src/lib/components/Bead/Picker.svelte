@@ -53,6 +53,11 @@ Props:
           <p>
             {randAnswer === 0 ? 'Not really. Try again!' : 'Incorrect. Keep trying!'}
           </p>
+          {#if exercise.hints != null}
+            <p>
+              Hint: {exercise.hints}
+            </p>
+          {/if}
         {/if}
       </div>
     </div>

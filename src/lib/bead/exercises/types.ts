@@ -60,4 +60,5 @@ export type ExercisePicker = {
   options: string[]
   correctAnswer: number
   justification: string
+  hints?: string
 }
